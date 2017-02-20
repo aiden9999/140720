@@ -1,0 +1,11 @@
+@import url("https://googledrive.com/host/0BxmAw3HA4YGCfk5LdE5KZ1AyQXFuYTBDVm8xQVp2OW91YVRGZW1ySHlDbmlaNE5CRlBERlU/seoul-namsan-jung-b.css");
+
+body { margin: 0; font-family:'Nanum Gothic'; font-size: 18px; font-family: seoul-namsan-jung-b; }
+div, header, footer, section, nav { position: relative;}
+img { vertical-align: top; max-width: 100%; }
+ul { margin: 0; padding: 0; }
+li { list-style: none; }
+
+.intro { width: 100%; height: 950px; background-image: url('/img/intro_background.png'); background-size: cover; opacity: 0.7; }
+.intro .main { width: 150px; height: 50px; left: 50px; top: 50px; font-size: 30px; cursor: pointer; display: inline-block; }
+.intro .d_day { width: 300px; height: 100px; left:650px; top: 150px; display: inline-block; font-size: 30px; text-align: center; }
