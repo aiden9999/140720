@@ -21,27 +21,66 @@ li { list-style: none; }
 .intro_wrap .intro_picture { width: 70%; height: 100vh; background-image: url('/img/intro_picture.png'); background-size: cover; opacity: 0.7; display: inline-block; background-position: center center; background-repeat: no-repeat; }
 
 header { width: 100%; }
-.header_inner { width: 1000px; margin: 0 auto; }
+.header_inner { width: 1000px; margin: 20px auto; border-bottom: 2px solid black; }
 .header_inner .header_logo { width: 170px; margin: 0 auto; padding: 15px 0; cursor: pointer; }
 .header_inner .header_gnb { width: 100%; font-size: 0; padding: 15px 0; }
 .header_inner .header_gnb .gnb { width: 20%; display: inline-block; text-align: center; font-size: 30px; }
 .header_inner .header_gnb .gnb span { cursor: pointer; }
 .header_inner .header_gnb .gnb span:hover { color: pink; }
 
-.main { width: 100%; height: 100%; overflow-y: hidden; }
-.main .img1 { width: 100%; height: 100%; background-image: url('/img/11.jpg'); background-size: 100%; background-repeat: no-repeat; }
-.main .img2 { width: 100%; height: 100%; background-image: url('/img/22.jpg'); background-size: 100%; background-repeat: no-repeat; }
-.main .img3 { width: 100%; height: 100%; background-image: url('/img/33.jpg'); background-size: 100%; background-repeat: no-repeat; }
-.main .img4 { width: 100%; height: 100%; background-image: url('/img/44.jpg'); background-size: 100%; background-repeat: no-repeat; }
-.main .img5 { width: 100%; height: 100%; background-image: url('/img/55.jpg'); background-size: 100%; background-repeat: no-repeat; }
+footer { width: 100%; margin: 20px auto; }
+.footer_inner { width: 1000px; margin: 0 auto; text-align: center; border-top: 2px solid black; }
+.footer_inner .footer_logo { width: 120px; margin: 0 auto; padding: 15px 0; cursor: pointer; }
+.footer_inner .footer_txt { font-size: 25px; text-align: center; }
+
+.main { width: 100%; margin: 0 auto; }
 .main .main_inner { width: 1000px; margin: 0 auto; }
 .main .section1 .banner { width: 80%; margin: auto auto; display: inline-block; background-image: url('/img/main_section1_banner.png'); text-align: center; padding: 5px 0; }
 .main .section1 .banner .banner_people { padding: 2px; }
 .main .section1 .banner .banner_d_day { font-size: 20px; padding: 3px; }
-.main .section1 .main_login { width: 20%; margin: 0 auto; display: inline-block; float: right; text-align: center; padding: 10px 0; }
-.main .section1 .main_login .txt { width: 50px; font-size: 18px; font-weight: bold; padding: 2px 0; margin-top: 10px; display: inline-block; }
+.main .section1 .main_login { width: 20%; height: 140px; display: inline-block; float: right; text-align: center; }
+.main .section1 .main_login .txt { width: 50px; font-size: 18px; font-weight: bold; padding: 2px 0; margin-top: 20px; display: inline-block; }
 .main .section1 .main_login input { width: 100px; border-radius: 5px; padding-left: 5px; display: inline-block; }
 .main .section1 .main_login .btn { width: 50px; height: 20px; border: 1px solid #fda8ec; border-radius: 3px; cursor: pointer; display: inline-block; margin: 20px 10px 0 10px; text-align: center; padding: 2px; }
+
+.main .section2 .middle { width: 80%; display: inline-block; }
+.main .section2 .slider { width: 800px; height: 300px; overflow: hidden; margin-top: 20px; }
+.main .section2 .slider .arrow_wrap { width: 800px; position: absolute; display: inline-block; top: 50%; transform: translateY(-50%); }
+.main .section2 .slider .arrow_wrap .arrow_left { width: 35px; float: left; display: inline-block; left: 20px; cursor: pointer; }
+.main .section2 .slider .arrow_wrap .arrow_right { width: 35px; float: right; display: inline-block; right: 20px; cursor: pointer; }
+.main .section2 .slider .slider_inner { width: 3000px; position: absolute; }
+.main .section2 .slider .slider_inner .slide { width: 800px; display: inline-block; }
+.main .section2 .slider .slider_inner .slide img { width: 100%; }
+
+.main .section2 .side { width: 20%; height: 550px; display: inline-block; float: right; margin-top: 20px; text-align: center; }
+.main .section2 .side .movie { width: 95%; height: 300px; display: inline-block; text-align: center; }
+.main .section2 .side .theater { width: 95%; height: 300px; display: inline-block; text-align: center; }
+.main .section2 .side .title { font-size: 25px; margin-top: 10px; border-bottom: 1px solid pink; border-bottom-style: dashed; }
+.main .section2 .side .txt { font-size: 20px; margin-top: 10px; text-align: left; left: 30px; }
+
+.main .section2 .bottom { width: 80%; display: inline-block; }
+.main .section2 .bottom .tab1 { width: 32%; margin: 0 5px; display: inline-block; float: left; }
+.main .section2 .bottom .tab2 { width: 32%; margin: 0 5px; display: inline-block; }
+.main .section2 .bottom .tab3 { width: 32%; margin: 0 5px; display: inline-block; float: right; }
+.main .section2 .bottom .title { width: 100%; margin: 0 10px; }
+.main .section2 .bottom .title .title_txt { padding: 3px 0; text-align: center; font-size: 25px; border-bottom: 1px solid pink; }
+.main .section2 .bottom .content { width: 100%; }
+.main .section2 .bottom .content .txt_wrap { width: 100%; text-align: left; margin: 10px 0; }
+.main .section2 .bottom .content .dot { width: 10px; height: 10px; margin-left: 10px; background-image: url('/img/dot.png'); display: inline-block; }
+.main .section2 .bottom .content .content_txt { width: 90%; font-size: 20px; display: inline-block; }
+.main .section2 .bottom .content .no_content { width: 100%; text-align: center; font-size: 20px; margin: 10px 0;}
+
+.main .section3 .calendar { width: 100%; height: 300px; margin-top: 20px; }
+.main .section3 .calendar .side { width: 30%; display: inline-block; top: 45%; transform: translateY(-50%); text-align: center; }
+.main .section3 .calendar .side .txt { font-size: 25px; padding: 10px 0; }
+
+.main .section3 .calendar .data { width: 70%; height: 300px; float: right; }
+.main .section3 .calendar .data .data_top { width: 100%; height: 50px; }
+.main .section3 .calendar .data .data_top .arrow_wrap { width: 500px; position: absolute; display: inline-block; }
+.main .section3 .calendar .data .data_top .arrow_wrap .arrow_left { width: 35px; float: left; display: inline-block; left: 20; cursor: pointer; }
+.main .section3 .calendar .data .data_top .arrow_wrap .arrow_right { width: 35px; float: right; display: inline-block; right: 20; cursor: pointer; }
+.main .section3 .calendar .data .data_top .arrow_wrap .month { position: absolute;  left: 50%; transform: translateX(-50%); font-size: 25px; padding-top: 5px; }
+.main .section3 .calendar .data .data_box { width: 500px; height: 200px; border: 1px solid pink; }
 
 @media all and (max-width: 1200px) { 
 	.intro_wrap .intro_txt { width: 100%; height: 100px; position: fixed; top: 0; left: 0; background-color: white; z-index: 2; }
@@ -52,11 +91,34 @@ header { width: 100%; }
 	.intro_wrap .intro_picture { width: 100%; }
 }
 
-@media all and (max-width: 1000px) { 
+@media all and (max-width: 1070px) { 
 	.header_inner { width: 100%; }
+	.footer_inner { width: 100%; }
+	.main .main_inner { width: 100%; }
+	.main .section1 .banner { width: 100%; }
+	.main .section1 .main_login { display: none; }
+	.main .section2 .middle { width: 100%; }
+	.main .section2 .middle .slider { width: 100%; }
+	.main .section2 .middle .slider .arrow_wrap { width: 100%; }
+/* 	.main .section2 .middle .slider .slide { width: 100%; } */
+	.main .section2 .side { width: 100%; height: 300px; }
+	.main .section2 .side .movie { width: 45%; }
+	.main .section2 .side .theater { width: 45%; }
+	.main .section2 .bottom { width: 100%; }
+}
+
+@media all and (max-width: 800px) { 
+	.main .section2 .bottom .tab1 { width: 100%; }
+	.main .section2 .bottom .tab2 { width: 100%; }
+	.main .section2 .bottom .tab3 { width: 100%; }
+	.main .section3 .calendar .side { display: none; }
+	.main .section3 .calendar .data { width: 100%; }
+	.main .section3 .calendar .data .data_top .arrow_wrap { width: 100%; }
+	.main .section3 .calendar .data .data_box { width: 98%; margin: 0 5px; }
 }
 
 @media all and (max-width: 550px) { 
+	.header_inner .header_gnb .gnb { font-size: 20px; }
 	.intro_wrap .intro_txt .intro_main { width: 100px; top: 35px; }
 	.intro_wrap .intro_txt .intro_d_day { font-size: 25px; top: 15px; }
 	.intro_wrap .intro_txt .intro_people { display: none; }

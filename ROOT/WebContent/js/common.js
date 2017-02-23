@@ -3,7 +3,7 @@ $(document).ready( function() {
 	setViewTime = function (){ //함수로 만들어 준다.
 		//아래 부분 입력창에서 가져오지 않고 그냥 셋팅해도 된다.
 		var getYear = 2014;
-		var getMonth = 07;
+		var getMonth = 7;
 		var getDay = 20;
         
 		var dat1 = new Date(); //현재날짜
