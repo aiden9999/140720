@@ -168,7 +168,130 @@
 	</body>
 
 	<script>
+		var eMonth;
+		$(document).ready(function(){
+			eMonth = new Array("January", "Febuary", "March", "April", "May", "June", "July", "August", "September" ,"October", "November", "December");
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth();
+			$("#year").html(year);
+			$("#month").html(month+1);
+			$("#eMonth").html(eMonth[month]);
+			calendar(year, month);
+		});
 		
+		// 달력
+		function calendar(getYear, getMonth){
+			var calendar = new Date(getYear, getMonth);		// Date 객체 생성
+			var day_of_week = new Array("일", "월", "화", "수", "목", "금", "토");
+			var month_of_year = new Array("1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월");
+			var year = calendar.getYear();	// yyyy
+			var month = calendar.getMonth();		// 0~11(1월~12월)
+			var today = calendar.getDate();		// 1~31(1일~31일)
+			var week = calendar.getDay();		// 0~6(일요일~토요일)
+			
+			calendar.setDate(1);		// 1일부터 셋팅
+			
+			var days_of_week = 7;		// 일주일 7일 셋팅
+			var days_of_month = 31;		// 한달 최대 31일 셋팅
+			var html;		// html 소스 변수
+			
+			var tr_start = "<tr>";
+			var tr_end = "</tr>";
+			
+			var td_blank = "<td>";		// 빈칸
+			var td_day = "<td><span>"		// 평일
+			var td_saterday = "<td><span class='txt1'>";		// 토요일
+			var td_sunday = "<td><span class='txt2'>";		// 일요일
+			var td_day_end = "</span></td>";		// 평일, 토요일, 일요일 끝
+			var td_end = "</td>";		// 빈칸 끝
+			
+			// 왼쪽 이미지 셋팅
+			html = tr_start+"<th rowspan='6'><div class='tit_wrap'><div class='txt'><span class='txt1'>2017</span><br>입시일정</div>";
+			html += "<div class='img'><img src='/img/sub02/sub02_03/calendar.png'></div></div></th>";
+			// 빈칸 설정
+			for(var i=0; i<calendar.getDay(); i++){
+				html += td_blank+td_end;
+			}
+			
+			// 1일부터 시작
+			for(var i=0; i<days_of_month; i++){
+				// 날짜가 1보다 작을때만 셋팅 -> 1보다 작으면 다음달로 넘어가서 1일로 변환된거
+				if(calendar.getDate()>i){
+					var day = calendar.getDate();		// 날짜
+					var week_day = calendar.getDay();		// 요일
+					
+					// 일요일일 경우 열 변경
+					if(week_day==0){
+						html += tr_start;
+					}
+					
+					switch(week_day){
+					case 0:		// 일요일
+						html += td_sunday+day+td_day_end;
+						break;
+					case 6:		// 토요일
+						html += td_saterday+day+td_day_end;
+						html += tr_end;
+						break;
+						default:	// 평일
+							html += td_day+day+td_day_end;
+							break;
+					}
+				}
+				
+				// 다음 날짜로 넘어감
+				calendar.setDate(calendar.getDate()+1);
+			}
+			
+			html += tr_end;
+			
+			$("#data_box").html(html);
+		}
+		// 이전 달
+		function prev(){
+			var year = $("#year").html();
+			var month = $("#month").html();
+			if(month==1){
+				year --;
+	    		calendar(year, 12);
+	    		$("#year").html(year);
+	    		$("#month").html(12);
+	    		$("#eMonth").html(eMonth[11]);
+			} else {
+				calendar(year, month-1);
+				$("#year").html(year);
+				$("#month").html(Number(month)-1);
+				$("#eMonth").html(eMonth[Number(month)-2]);
+			}
+		}
+		// 다음 달
+		function next(){
+			var year = $("#year").html();
+			var month = $("#month").html();
+			if(month==12){
+				year ++;
+				calendar(year, 1);
+				$("#year").html(year);
+				$("#month").html(1);
+				$("#eMonth").html(eMonth[0]);
+			} else {
+				calendar(year, month+1);
+				$("#year").html(year);
+				$("#month").html(Number(month)+1);
+				$("#eMonth").html(eMonth[Number(month)]);
+			}
+		}
+		// 오늘로
+		function today(){
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth();
+			calendar(year, month);
+			$("#year").html(year);
+			$("#month").html(month+1);
+			$("#eMonth").html(eMonth[Number(month)]);
+		}
 	</script>
 
 </html>
