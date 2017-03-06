@@ -40,22 +40,11 @@
 					<div class="middle">
 						<div class="slider">
 							<div class="slider_inner">
-								<div class="slide">
-									<img src="/img/slide_1.png"/>
+								<div class="slide" id="slide1" style="background-image: url('/img/slide_1.png')">
 								</div>
-								<div class="slide">
-									<img src="/img/slide_2.png"/>
+								<div class="slide" id="slide2" style="background-image: url('/img/slide_2.png')">
 								</div>
-								<div class="slide">
-									<img src="/img/slide_3.png"/>
-								</div>
-							</div>
-							<div class="arrow_wrap">
-								<div class="arrow_left">
-									<img src="/img/arrow_left.png"/>
-								</div>
-								<div class="arrow_right">
-									<img src="/img/arrow_right.png"/>
+								<div class="slide" id="slide3" style="background-image: url('/img/slide_3.png')">
 								</div>
 							</div>
 						</div>
@@ -130,7 +119,7 @@
 					</div>
 				</section>
 				<section class="section3">
-					<div class="calendar">
+					<div class="calendar" align="center">
 						<div class="side">
 							<div class="txt">Schedule</div>
 							<div class="img">
@@ -140,16 +129,17 @@
 						<div class="data">
 							<div class="data_top">
 								<div class="arrow_wrap">
-									<div class="arrow_left">
+									<div class="arrow_left" onclick="prev()">
 										<img src="/img/arrow_left.png"/>
 									</div>
-									<div class="arrow_right">
+									<div class="arrow_right" onclick="next()">
 										<img src="/img/arrow_right.png"/>
 									</div>
-									<div class="month">12월</div>
+									<div class="month" id="yearMonth"></div>
+									<div class="today" onclick="today()">오늘로</div>
 								</div>
 							</div>
-							<div class="data_box"></div>
+							<div class="data_box"><table class="calendar_table" id="calendar"></table></div>
 						</div>
 					</div>
 				</section>
@@ -167,12 +157,27 @@
 			var date = new Date();
 			var year = date.getFullYear();
 			var month = date.getMonth();
-			$("#year").html(year);
-			$("#month").html(month+1);
+			$("#yearMonth").html(year+"년 "+(month+1)+"월");
 			$("#eMonth").html(eMonth[month]);
 			calendar(year, month);
+			setTimeout(slide, 3000);
+			$("#slide2").hide();
+			$("#slide3").hide();
 		});
-		
+		// slide
+		var sn = 1;
+		function slide(){
+			if(sn==3){
+				$("#slide"+sn).fadeOut(1500);
+				$("#slide1").fadeIn(1500);
+				sn = 1;
+			} else {
+				$("#slide"+sn).fadeOut(1500);
+				$("#slide"+(sn+1)).fadeIn(1500);
+				sn++;
+			}
+			setTimeout(slide, 3000);
+		}
 		// 달력
 		function calendar(getYear, getMonth){
 			var calendar = new Date(getYear, getMonth);		// Date 객체 생성
@@ -200,8 +205,7 @@
 			var td_end = "</td>";		// 빈칸 끝
 			
 			// 왼쪽 이미지 셋팅
-			html = tr_start+"<th rowspan='6'><div class='tit_wrap'><div class='txt'><span class='txt1'>2017</span><br>입시일정</div>";
-			html += "<div class='img'><img src='/img/sub02/sub02_03/calendar.png'></div></div></th>";
+			html = tr_start;
 			// 빈칸 설정
 			for(var i=0; i<calendar.getDay(); i++){
 				html += td_blank+td_end;
@@ -239,39 +243,37 @@
 			
 			html += tr_end;
 			
-			$("#data_box").html(html);
+			$("#calendar").html(html);
 		}
 		// 이전 달
 		function prev(){
-			var year = $("#year").html();
-			var month = $("#month").html();
+			var yearMonth = $("#yearMonth").html();
+			var year = yearMonth.substring(0, yearMonth.indexOf('년'));
+			var month = yearMonth.substring(yearMonth.indexOf('년')+2, yearMonth.indexOf('월'));
 			if(month==1){
 				year --;
 	    		calendar(year, 12);
-	    		$("#year").html(year);
-	    		$("#month").html(12);
+	    		$("#yearMonth").html(year+"년 12월");
 	    		$("#eMonth").html(eMonth[11]);
 			} else {
 				calendar(year, month-1);
-				$("#year").html(year);
-				$("#month").html(Number(month)-1);
+				$("#yearMonth").html(year+"년 "+(Number(month)-1)+"월");
 				$("#eMonth").html(eMonth[Number(month)-2]);
 			}
 		}
 		// 다음 달
 		function next(){
-			var year = $("#year").html();
-			var month = $("#month").html();
+			var yearMonth = $("#yearMonth").html();
+			var year = yearMonth.substring(0, yearMonth.indexOf('년'));
+			var month = yearMonth.substring(yearMonth.indexOf('년')+2, yearMonth.indexOf('월'));
 			if(month==12){
 				year ++;
 				calendar(year, 1);
-				$("#year").html(year);
-				$("#month").html(1);
+				$("#yearMonth").html(year+"년 1월");
 				$("#eMonth").html(eMonth[0]);
 			} else {
 				calendar(year, month+1);
-				$("#year").html(year);
-				$("#month").html(Number(month)+1);
+				$("#yearMonth").html(year+"년 "+(Number(month)+1)+"월");
 				$("#eMonth").html(eMonth[Number(month)]);
 			}
 		}
@@ -281,8 +283,7 @@
 			var year = date.getFullYear();
 			var month = date.getMonth();
 			calendar(year, month);
-			$("#year").html(year);
-			$("#month").html(month+1);
+			$("#yearMonth").html(year+"년 "+(month+1)+"월");
 			$("#eMonth").html(eMonth[Number(month)]);
 		}
 	</script>

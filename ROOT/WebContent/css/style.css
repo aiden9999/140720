@@ -48,8 +48,8 @@ footer { width: 100%; margin: 20px auto; }
 .main .section2 .slider .arrow_wrap { width: 800px; position: absolute; display: inline-block; top: 50%; transform: translateY(-50%); }
 .main .section2 .slider .arrow_wrap .arrow_left { width: 35px; float: left; display: inline-block; left: 20px; cursor: pointer; }
 .main .section2 .slider .arrow_wrap .arrow_right { width: 35px; float: right; display: inline-block; right: 20px; cursor: pointer; }
-.main .section2 .slider .slider_inner { width: 3000px; position: absolute; }
-.main .section2 .slider .slider_inner .slide { width: 800px; display: inline-block; }
+.main .section2 .slider .slider_inner { width: 100%; height: 100%; position: absolute; }
+.main .section2 .slider .slider_inner .slide { width: 100%; height: 100%; display: inline-block; background-image: url('/img/slide_1.png'); background-repeat: no-repeat; background-size: 100%; position: absolute; }
 .main .section2 .slider .slider_inner .slide img { width: 100%; }
 
 .main .section2 .side { width: 20%; height: 550px; display: inline-block; float: right; margin-top: 20px; text-align: center; }
@@ -71,16 +71,20 @@ footer { width: 100%; margin: 20px auto; }
 .main .section2 .bottom .content .no_content { width: 100%; text-align: center; font-size: 20px; margin: 10px 0;}
 
 .main .section3 .calendar { width: 100%; height: 300px; margin-top: 20px; }
-.main .section3 .calendar .side { width: 30%; display: inline-block; top: 45%; transform: translateY(-50%); text-align: center; }
+.main .section3 .calendar .side { width: 30%; display: inline-block; top: 50%; transform: translateY(-50%); text-align: center; }
 .main .section3 .calendar .side .txt { font-size: 25px; padding: 10px 0; }
 
 .main .section3 .calendar .data { width: 70%; height: 300px; float: right; }
 .main .section3 .calendar .data .data_top { width: 100%; height: 50px; }
-.main .section3 .calendar .data .data_top .arrow_wrap { width: 500px; position: absolute; display: inline-block; }
-.main .section3 .calendar .data .data_top .arrow_wrap .arrow_left { width: 35px; float: left; display: inline-block; left: 20; cursor: pointer; }
-.main .section3 .calendar .data .data_top .arrow_wrap .arrow_right { width: 35px; float: right; display: inline-block; right: 20; cursor: pointer; }
+.main .section3 .calendar .data .data_top .arrow_wrap { width: 500px; display: inline-block; }
+.main .section3 .calendar .data .data_top .arrow_wrap .arrow_left { width: 35px; float: left; display: inline-block; left: 100px; cursor: pointer; }
+.main .section3 .calendar .data .data_top .arrow_wrap .arrow_right { width: 35px; float: right; display: inline-block; right: 100px; cursor: pointer; }
 .main .section3 .calendar .data .data_top .arrow_wrap .month { position: absolute;  left: 50%; transform: translateX(-50%); font-size: 25px; padding-top: 5px; }
-.main .section3 .calendar .data .data_box { width: 500px; height: 200px; border: 1px solid pink; }
+.main .section3 .calendar .data .data_top .arrow_wrap .today { display: inline-block; float: right; padding-top: 25px; cursor: pointer; }
+.main .section3 .calendar .data .data_box { width: 500px; height: 250px; border: 1px solid pink; }
+.main .section3 .calendar .data .data_box .calendar_table { width: 100%; height: 100%; }
+.main .section3 .calendar .data .data_box .calendar_table .txt1 { color: blue; }
+.main .section3 .calendar .data .data_box .calendar_table .txt2 { color: red; }
 
 @media all and (max-width: 1200px) { 
 	.intro_wrap .intro_txt { width: 100%; height: 100px; position: fixed; top: 0; left: 0; background-color: white; z-index: 2; }
@@ -100,7 +104,7 @@ footer { width: 100%; margin: 20px auto; }
 	.main .section2 .middle { width: 100%; }
 	.main .section2 .middle .slider { width: 100%; }
 	.main .section2 .middle .slider .arrow_wrap { width: 100%; }
-/* 	.main .section2 .middle .slider .slide { width: 100%; } */
+	.main .section2 .middle .slider .slide { width: 100%; }
 	.main .section2 .side { width: 100%; height: 300px; }
 	.main .section2 .side .movie { width: 45%; }
 	.main .section2 .side .theater { width: 45%; }
