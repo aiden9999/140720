@@ -5,14 +5,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>140720</title>
-		<meta charset="utf-8">
-        <link rel="stylesheet" href="/css/style.css" type="text/css">
-        <link href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" rel='stylesheet' type='text/css'>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-        <meta name="robots" content="follow">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="/js/common.js"></script>
+		<c:import url="/WEB-INF/view/main/head.jsp"/>
 	</head>
 	
 	<body>
@@ -34,14 +27,25 @@
 							<font id="second"></font>초
 						</div>
 					</div>
-					<div class="main_login">
-						<div class="txt">ID</div>
-						<input type="text" id="id" maxlength="12"/>
-						<div class="txt">PW</div>
-						<input type="password" id="pw" maxlength="16"/>
-						<div class="btn">JOIN</div>
-						<div class="btn">LOGIN</div>
-					</div>
+					<c:choose>
+						<c:when test="${login == null }">
+							<div class="main_login">
+								<div class="txt">ID</div>
+								<input type="text" id="id" maxlength="12"/>
+								<div class="txt">PW</div>
+								<input type="password" id="pw" maxlength="16"/>
+								<div class="btn">회원가입</div>
+								<div class="btn" onclick="login()">로그인</div>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="main_logon">
+								<div class="txt">${login.nick } 님 안녕하세요.</div>
+								<div class="btn">내정보</div>
+								<div class="btn">로그아웃</div>
+							</div>
+						</c:otherwise>
+					</c:choose>
 				</section>
 				<section class="section2">
 					<div class="middle">
@@ -155,6 +159,32 @@
 		<footer>
 			<c:import url="/WEB-INF/view/main/footer.jsp"/>
 		</footer>
+		<div class="popup_back" id="popup1"></div>
+		<div class="popup_front" id="popup2">
+			<div class="txt_wrap" id="txt_wrap">
+				<div class="txt_day" id="popup_day"></div>
+				<div class="txt_schedule">
+					<div class="txt" id="popup_schedule"></div>
+					<input type="text" id="popup_input" maxlength="25"/>
+				</div>
+			</div>
+			<div class="btn_wrap" id="btn_wrap">
+				<c:if test="${login != null }">
+					<div class="btn" id="add"><span onclick="add_schedule()">추가</span></div>
+					<div class="btn btn_hidden" id="cancel"><span onclick="cancel_schedule()">취소</span></div>
+					<div class="btn" id="remove"><span onclick="remove_schedule()">삭제</span></div>
+					<div class="btn btn_hidden" id="save"><span onclick="save_schedule()">저장</span></div>
+				</c:if>
+				<div class="btn" id="closeBtn"><span onclick="close_popup()">닫기</span></div>
+			</div>
+			<div class="remove_wrap" id="remove_wrap">
+				<div class="txt_wrap">
+					<div class="remove_txt">삭제하시겠습니까?</div>
+					<div class="btn"><span onclick="remove_no()">아니오</span></div>
+					<div class="btn"><span onclick="remove_yes()">네</span></div>
+				</div>
+			</div>
+		</div>
 	</body>
 
 	<script>
@@ -185,6 +215,18 @@
 			}
 			setTimeout(slide, 3000);
 		}
+		// 로그인
+		function login(){
+			var id = $("#id").val();
+			var pw = $("#pw").val();
+			location.href="/login/"+id+"/"+pw;
+		}
+		// 비밀번호 창에서 엔터
+		$("#pw").keyup(function(evt){
+			if(evt.keyCode==13){
+				login();
+			}
+		});
 		// 달력
 		function calendar(getYear, getMonth){
 			var calendar = new Date(getYear, getMonth);		// Date 객체 생성
@@ -205,9 +247,9 @@
 			var tr_end = "</tr>";
 			
 			var td_blank = "<td>";		// 빈칸
-			var td_day = "<td><span>"		// 평일
-			var td_saterday = "<td><span class='txt1'>";		// 토요일
-			var td_sunday = "<td><span class='txt2'>";		// 일요일
+			var td_day = "<td onclick=popup(this)><span>"		// 평일
+			var td_saterday = "<td onclick=popup(this)><span class='txt1'>";		// 토요일
+			var td_sunday = "<td onclick=popup(this)><span class='txt2'>";		// 일요일
 			var td_day_end = "</span></td>";		// 평일, 토요일, 일요일 끝
 			var td_end = "</td>";		// 빈칸 끝
 			
@@ -259,11 +301,11 @@
 			var month = yearMonth.substring(yearMonth.indexOf('년')+2, yearMonth.indexOf('월'));
 			if(month==1){
 				year --;
-	    		calendar(year, 12);
+	    		calendar(year, 11);
 	    		$("#yearMonth").html(year+"년 12월");
 	    		$("#eMonth").html(eMonth[11]);
 			} else {
-				calendar(year, month-1);
+				calendar(year, month-2);
 				$("#yearMonth").html(year+"년 "+(Number(month)-1)+"월");
 				$("#eMonth").html(eMonth[Number(month)-2]);
 			}
@@ -275,11 +317,11 @@
 			var month = yearMonth.substring(yearMonth.indexOf('년')+2, yearMonth.indexOf('월'));
 			if(month==12){
 				year ++;
-				calendar(year, 1);
+				calendar(year, 0);
 				$("#yearMonth").html(year+"년 1월");
 				$("#eMonth").html(eMonth[0]);
 			} else {
-				calendar(year, month+1);
+				calendar(year, month);
 				$("#yearMonth").html(year+"년 "+(Number(month)+1)+"월");
 				$("#eMonth").html(eMonth[Number(month)]);
 			}
@@ -292,6 +334,88 @@
 			calendar(year, month);
 			$("#yearMonth").html(year+"년 "+(month+1)+"월");
 			$("#eMonth").html(eMonth[Number(month)]);
+		}
+		// 달력 팝업
+		function popup(element){
+			var html = element.innerHTML.substring(element.innerHTML.indexOf('>')+1, element.innerHTML.lastIndexOf('<'));
+			$("#popup1").show();
+			$("#popup2").show();
+			$("body").css("overflow", "hidden");
+			$("#popup_day").html($("#yearMonth").html()+" "+html+"일");
+			$("#popup_schedule").html(html);
+		}
+		// 팝업 닫기
+		function close_popup(){
+			$('#popup1').hide();
+			$('#popup2').hide();
+			$('body').css('overflow', 'auto');
+			$('#popup_schedule').show();
+			$('#popup_input').hide();
+			$('#popup_input').val("");
+			$("#add").css("display", "inline-block");
+			$("#cancel").hide();
+			$("#remove").css("display", "inline-block");
+			$("#save").hide();
+		}
+		// 스케줄 추가
+		function add_schedule(){
+			$('#popup_schedule').hide();
+			$('#popup_input').show();
+			$("#add").hide();
+			$("#cancel").css("display", "inline-block");
+			$("#remove").hide();
+			$("#save").css("display", "inline-block");
+			$("#closeBtn").hide();
+		}
+		// 스케줄 추가 저장
+		function save_schedule(){
+			var day = $("#popup_day").html();
+			var schedule = $("#popup_input").val();
+			if(schedule.length==0){
+				alert("스케줄을 작성해주세요.");
+			} else {
+				$.ajax({
+					type : "post",
+					url : "/schedule/add/"+day+"/"+schedule,
+					async : false,
+					success : function(num){
+						if(num==0){
+							alert("추가되었습니다.");
+							location.reload();
+						} else if(num==1){
+							alert("이미 스케줄이 있는 날짜입니다.\n변경하시겠습니까?");
+						} else {
+							alert("저장에 실패하였습니다.\n잠시후 다시 시도해주세요.");
+						}
+					}
+				});
+			}
+		}
+		// 스케줄 추가 취소
+		function cancel_schedule(){
+			$("#popup_schedule").css("display", "inline-block");
+			$("#popup_input").hide();
+			$("#add").css("display", "inline-block");
+			$("#cancel").hide();
+			$("#remove").css("display", "inline-block");
+			$("#save").hide();
+			$("#closeBtn").css("display", "inline-block");
+		}
+		// 스케줄 삭제
+		function remove_schedule(){
+			$("#remove_wrap").show();
+			$("#txt_wrap").hide();
+			$("#btn_wrap").hide();
+		}
+		// 삭제-아니오
+		function remove_no(){
+			$("#remove_wrap").hide();
+			$("#txt_wrap").show();
+			$("#btn_wrap").show();
+		}
+		// 삭제-예
+		function remove_yes(){
+			
 		}
 	</script>
 
