@@ -9,9 +9,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 <meta name="robots" content="follow">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<<<<<<< HEAD
-<script src="/js/common.js"></script>
-=======
 <script src="/js/common.js"></script>
 <meta name="naver-site-verification" content="83760bc2bd16c977add913a18357041d9a8dcbe6"/>
 
@@ -21,4 +18,3 @@
 <meta property="og:title" content="140720" />
 <meta property="og:url" content="http://140720.co.kr" />
 <meta property="og:description" content="140720" />
->>>>>>> branch 'master' of https://github.com/aiden9999/140720.git
