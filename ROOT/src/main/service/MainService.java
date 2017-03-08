@@ -15,7 +15,7 @@ public class MainService {
 	SqlSessionFactory fac;
 	
 	// 로그인
-	public void login(String id, String pw, HttpSession session){
+	public boolean login(String id, String pw, HttpSession session){
 		SqlSession ss = fac.openSession();
 		HashMap<String, String> map = new HashMap<>();
 		map.put("id", id);
@@ -24,6 +24,14 @@ public class MainService {
 		ss.close();
 		if(list.size()>0){
 			session.setAttribute("login", list.get(0));
+			return true;
+		} else {
+			return false;
 		}
+	}
+
+	// 로그아웃
+	public void logout(HttpSession session) {
+		session.removeAttribute("login");
 	}
 }

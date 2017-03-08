@@ -34,6 +34,7 @@
 								<input type="text" id="id" maxlength="12"/>
 								<div class="txt">PW</div>
 								<input type="password" id="pw" maxlength="16"/>
+								<div class="loginFail" id="loginFail">아이디 / 비밀번호를 확인해주세요.</div>
 								<div class="btn">회원가입</div>
 								<div class="btn" onclick="login()">로그인</div>
 							</div>
@@ -42,7 +43,7 @@
 							<div class="main_logon">
 								<div class="txt">${login.nick } 님 안녕하세요.</div>
 								<div class="btn">내정보</div>
-								<div class="btn">로그아웃</div>
+								<div class="btn" onclick="location.href='/logout'">로그아웃</div>
 							</div>
 						</c:otherwise>
 					</c:choose>
@@ -197,6 +198,7 @@
 			$("#yearMonth").html(year+"년 "+(month+1)+"월");
 			$("#eMonth").html(eMonth[month]);
 			calendar(year, month);
+			setSchedule();
 			setTimeout(slide, 3000);
 			$("#slide2").hide();
 			$("#slide3").hide();
@@ -219,7 +221,18 @@
 		function login(){
 			var id = $("#id").val();
 			var pw = $("#pw").val();
-			location.href="/login/"+id+"/"+pw;
+			$.ajax({
+				type : "post",
+				url : "/login/"+id+"/"+pw,
+				async : false,
+				success : function(txt){
+					if(txt){
+						location.href="/index";
+					} else {
+						$("#loginFail").show();
+					}
+				}
+			});
 		}
 		// 비밀번호 창에서 엔터
 		$("#pw").keyup(function(evt){
@@ -247,10 +260,10 @@
 			var tr_end = "</tr>";
 			
 			var td_blank = "<td>";		// 빈칸
-			var td_day = "<td onclick=popup(this)><span>"		// 평일
-			var td_saterday = "<td onclick=popup(this)><span class='txt1'>";		// 토요일
-			var td_sunday = "<td onclick=popup(this)><span class='txt2'>";		// 일요일
-			var td_day_end = "</span></td>";		// 평일, 토요일, 일요일 끝
+			var td_day = "<td class='day' onclick='popup(this)'><div>"		// 평일
+			var td_saterday = "<td class='day' onclick='popup(this)'><div class='txt1'>";		// 토요일
+			var td_sunday = "<td class='day' onclick='popup(this)'><div class='txt2'>";		// 일요일
+			var td_day_end = "</div>";		// 평일, 토요일, 일요일 끝
 			var td_end = "</td>";		// 빈칸 끝
 			
 			// 왼쪽 이미지 셋팅
@@ -271,18 +284,16 @@
 					if(week_day==0){
 						html += tr_start;
 					}
-					
 					switch(week_day){
 					case 0:		// 일요일
-						html += td_sunday+day+td_day_end;
+						html += td_sunday+day+td_day_end+"<div class='schedule_txt' id='"+i+"'></div>"+td_end;
 						break;
 					case 6:		// 토요일
-						html += td_saterday+day+td_day_end;
-						html += tr_end;
+						html += td_saterday+day+td_day_end+"<div class='schedule_txt' id='"+i+"'></div>"+td_end;
 						break;
-						default:	// 평일
-							html += td_day+day+td_day_end;
-							break;
+					default:	// 평일
+						html += td_day+day+td_day_end+"<div class='schedule_txt' id='"+i+"'></div>"+td_end;
+						break;
 					}
 				}
 				
@@ -293,6 +304,22 @@
 			html += tr_end;
 			
 			$("#calendar").html(html);
+		}
+		// 스케줄 셋팅
+		function setSchedule(){
+			var day = new Array();
+			var sch = new Array();
+			var day2 = new Array();
+			for(var i=0; i<${schedule.size()}; i++){
+				day[i] = "${schedule.get(i).day}";
+				sch[i] = "${schedule.get(i).schedule}";
+			}
+			for(var i=0; i<day.length; i++){
+				day2[i] = day[i].substring(day[i].indexOf('월')+2, day[i].indexOf('일'));
+			}
+			for(var i=0; i<day2.length; i++){
+				$("#"+(day2[i]-1)).html(sch[i]);
+			}
 		}
 		// 이전 달
 		function prev(){
@@ -335,14 +362,15 @@
 			$("#yearMonth").html(year+"년 "+(month+1)+"월");
 			$("#eMonth").html(eMonth[Number(month)]);
 		}
-		// 달력 팝업
+		// 스케줄 팝업
 		function popup(element){
-			var html = element.innerHTML.substring(element.innerHTML.indexOf('>')+1, element.innerHTML.lastIndexOf('<'));
+			var day = element.innerHTML.substring(element.innerHTML.indexOf('>')+1, element.innerHTML.indexOf('</'));
+			var schedule = $("#"+(Number(day)-1)).html();
 			$("#popup1").show();
 			$("#popup2").show();
 			$("body").css("overflow", "hidden");
-			$("#popup_day").html($("#yearMonth").html()+" "+html+"일");
-			$("#popup_schedule").html(html);
+			$("#popup_day").html($("#yearMonth").html()+" "+day+"일");
+			$("#popup_schedule").html(schedule);
 		}
 		// 팝업 닫기
 		function close_popup(){

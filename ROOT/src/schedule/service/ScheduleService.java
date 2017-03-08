@@ -1,5 +1,6 @@
 package schedule.service;
 
+import java.text.*;
 import java.util.*;
 
 import org.apache.ibatis.exceptions.*;
@@ -33,5 +34,24 @@ public class ScheduleService {
 			ss.close();
 			return 2;
 		}
+	}
+	
+	// 스케줄 리스트
+	public List<HashMap> schedule(){
+		SqlSession ss = fac.openSession();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 M월 dd일");
+		String today = sdf.format(System.currentTimeMillis());
+		String month = today.substring(today.indexOf("년")+2, today.indexOf("월"));
+		List<HashMap> list = ss.selectList("schedule.schedule");
+		List<HashMap> sch = new Vector<>();
+		for(HashMap m : list){
+			String day = m.get("day").toString();
+			String schMonth = day.substring(day.indexOf("년")+2, day.indexOf("월"));
+			if(schMonth.equals(month)){
+				sch.add(m);
+			}
+		}
+		ss.close();
+		return sch;
 	}
 }

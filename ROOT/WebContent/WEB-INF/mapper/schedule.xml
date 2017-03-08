@@ -4,4 +4,7 @@
 	<insert id="add" parameterType="java.util.HashMap">
 		insert into schedule(day, schedule) values(#{day}, #{schedule})
 	</insert>
+	<select id="schedule" resultType="java.util.HashMap">
+		select * from schedule order by day desc
+	</select>
 </mapper>
