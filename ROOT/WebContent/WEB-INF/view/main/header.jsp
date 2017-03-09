@@ -20,7 +20,7 @@
 			<li class="gnb">
 				<span>Picture</span>
 			</li>
-			<li class="gnb">
+			<li class="gnb" onclick="location.href='/diary'">
 				<span>Diary</span>
 			</li>
 		</ul>

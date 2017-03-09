@@ -190,6 +190,7 @@
 
 	<script>
 		var eMonth;
+		var schedule;
 		$(document).ready(function(){
 			eMonth = new Array("January", "Febuary", "March", "April", "May", "June", "July", "August", "September" ,"October", "November", "December");
 			var date = new Date();
@@ -198,7 +199,6 @@
 			$("#yearMonth").html(year+"년 "+(month+1)+"월");
 			$("#eMonth").html(eMonth[month]);
 			calendar(year, month);
-			setSchedule();
 			setTimeout(slide, 3000);
 			$("#slide2").hide();
 			$("#slide3").hide();
@@ -260,9 +260,9 @@
 			var tr_end = "</tr>";
 			
 			var td_blank = "<td>";		// 빈칸
-			var td_day = "<td class='day' onclick='popup(this)'><div>"		// 평일
-			var td_saterday = "<td class='day' onclick='popup(this)'><div class='txt1'>";		// 토요일
-			var td_sunday = "<td class='day' onclick='popup(this)'><div class='txt2'>";		// 일요일
+			var td_day = "<td class='day'><div>"		// 평일
+			var td_saterday = "<td class='day'><div class='txt1'>";		// 토요일
+			var td_sunday = "<td class='day'><div class='txt2'>";		// 일요일
 			var td_day_end = "</div>";		// 평일, 토요일, 일요일 끝
 			var td_end = "</td>";		// 빈칸 끝
 			
@@ -286,13 +286,14 @@
 					}
 					switch(week_day){
 					case 0:		// 일요일
-						html += td_sunday+day+td_day_end+"<div class='schedule_txt' id='"+i+"'></div>"+td_end;
+						html += td_sunday+day+td_day_end+"<div class='schedule_txt' id='day"+i+"'></div>"+td_end;
 						break;
 					case 6:		// 토요일
-						html += td_saterday+day+td_day_end+"<div class='schedule_txt' id='"+i+"'></div>"+td_end;
+						html += td_saterday+day+td_day_end+"<div class='schedule_txt' id='day"+i+"'></div>"+td_end;
+						html += tr_end;
 						break;
 					default:	// 평일
-						html += td_day+day+td_day_end+"<div class='schedule_txt' id='"+i+"'></div>"+td_end;
+						html += td_day+day+td_day_end+"<div class='schedule_txt' id='day"+i+"'></div>"+td_end;
 						break;
 					}
 				}
@@ -304,22 +305,27 @@
 			html += tr_end;
 			
 			$("#calendar").html(html);
+			setSchedule((Number(getMonth)+1));
 		}
 		// 스케줄 셋팅
-		function setSchedule(){
-			var day = new Array();
-			var sch = new Array();
-			var day2 = new Array();
-			for(var i=0; i<${schedule.size()}; i++){
-				day[i] = "${schedule.get(i).day}";
-				sch[i] = "${schedule.get(i).schedule}";
-			}
-			for(var i=0; i<day.length; i++){
-				day2[i] = day[i].substring(day[i].indexOf('월')+2, day[i].indexOf('일'));
-			}
-			for(var i=0; i<day2.length; i++){
-				$("#"+(day2[i]-1)).html(sch[i]);
-			}
+		function setSchedule(month){
+			$.ajax({
+    			type : "post",
+    			url : "/schedule/schedule/"+month,
+    			async : false,
+    			success : function(txt){
+    				schedule = txt;
+    			}
+    		});
+    		for(var i=0; i<schedule.length; i++){
+    			var day = schedule[i].day;
+    			day = day.substring(day.indexOf('월')+2, day.indexOf('일'));
+    			var sch = schedule[i].schedule;
+    			if(sch.length>6){
+    				sch = sch.substring(0, 5)+"...";
+    			}
+    			$("#day"+(Number(day)-1)).append("<div class='txt' onclick='view("+i+")'>"+sch+"</div>");
+    		}
 		}
 		// 이전 달
 		function prev(){
@@ -363,14 +369,14 @@
 			$("#eMonth").html(eMonth[Number(month)]);
 		}
 		// 스케줄 팝업
-		function popup(element){
-			var day = element.innerHTML.substring(element.innerHTML.indexOf('>')+1, element.innerHTML.indexOf('</'));
-			var schedule = $("#"+(Number(day)-1)).html();
+		function view(num){
+			var day = schedule[num].day;
+			var sch = schedule[num].schedule;
 			$("#popup1").show();
 			$("#popup2").show();
 			$("body").css("overflow", "hidden");
-			$("#popup_day").html($("#yearMonth").html()+" "+day+"일");
-			$("#popup_schedule").html(schedule);
+			$("#popup_day").html(day);
+			$("#popup_schedule").html(sch);
 		}
 		// 팝업 닫기
 		function close_popup(){
@@ -443,7 +449,21 @@
 		}
 		// 삭제-예
 		function remove_yes(){
-			
+			var day = $("#popup_day").html();
+			var sch = $("#popup_schedule").html();
+			$.ajax({
+				type : "post",
+				url : "/schedule/remove/"+day+"/"+sch,
+				async : false,
+				success : function(txt){
+					if(txt){
+						alert("삭제되었습니다.");
+					} else {
+						alert("삭제에 실패하였습니다.\n잠시후 다시 시도해주세요.");
+					}
+					location.reload();
+				}
+			});
 		}
 	</script>
 

@@ -7,4 +7,7 @@
 	<select id="schedule" resultType="java.util.HashMap">
 		select * from schedule order by day desc
 	</select>
+	<delete id="remove" parameterType="java.util.HashMap">
+		delete from schedule where day = #{day} and schedule = #{schedule}
+	</delete>
 </mapper>

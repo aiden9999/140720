@@ -30,8 +30,6 @@ public class MainController {
 	@RequestMapping("/index")
 	public ModelAndView index(){
 		ModelAndView mav = new ModelAndView("/main/index.jsp");
-		List<HashMap> schedule = ss.schedule();
-		mav.addObject("schedule", schedule);
 		return mav;
 	}
 	
