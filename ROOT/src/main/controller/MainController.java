@@ -30,6 +30,8 @@ public class MainController {
 	@RequestMapping("/index")
 	public ModelAndView index(){
 		ModelAndView mav = new ModelAndView("/main/index.jsp");
+		List<LinkedHashMap> movie = ms.movie();
+		mav.addObject("movie", movie);
 		return mav;
 	}
 	

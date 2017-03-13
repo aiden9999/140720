@@ -65,16 +65,16 @@
 						<div class="movie">
 							<div class="title">Movie</div>
 							<div class="txt">
-								1. 더킹<br>
-								2. 더킹<br>
-								3. 더킹<br>
-								4. 더킹<br>
-								5. 더킹<br>
-								6. 더킹<br>
-								7. 더킹<br>
-								8. 더킹<br>
-								9. 더킹<br>
-								10. 더킹
+								<c:forEach var="t" items="${movie }">
+									<c:choose>
+										<c:when test="${t.movieNm.length() > 10 }">
+											<span onclick="movie(${t.movieCd}, ${t.rnum })">${t.rnum }.&nbsp;${t.movieNm.substring(0, 10) }...</span>
+										</c:when>
+										<c:otherwise>
+											<span onclick="movie(${t.movieCd}, ${t.rnum })">${t.rnum }.&nbsp;${t.movieNm }</span>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
 							</div>
 						</div>
 						<div class="theater">
@@ -464,6 +464,10 @@
 					location.reload();
 				}
 			});
+		}
+		// 영화 정보
+		function movie(movieCd, num){
+			location.href="/movie/"+movieCd+"/"+num;
 		}
 	</script>
 

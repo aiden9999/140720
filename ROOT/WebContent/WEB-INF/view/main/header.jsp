@@ -11,7 +11,7 @@
 			<li class="gnb">
 				<span>Culture</span>
 			</li>
-			<li class="gnb">
+			<li class="gnb" onclick="location.href='/travel'">
 				<span>Travel</span>
 			</li>
 			<li class="gnb">
