@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="movie">
+	<select id="list" resultType="java.util.HashMap">
+		select * from movie order by auto desc
+	</select>
+	<insert id="add" parameterType="java.util.HashMap">
+		insert into movie(num, title, open, running, genre, grade, director, actor, company, day)
+		values(#{num}, #{title}, #{open}, #{running}, #{genre}, #{grade}, #{director}, #{actor}, #{company}, now())
+	</insert>
+</mapper>

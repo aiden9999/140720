@@ -42,6 +42,7 @@
 						<c:otherwise>
 							<div class="main_logon">
 								<div class="txt">${login.nick } 님 안녕하세요.</div>
+								${ip }
 								<div class="btn">내정보</div>
 								<div class="btn" onclick="location.href='/logout'">로그아웃</div>
 							</div>
@@ -80,16 +81,9 @@
 						<div class="theater">
 							<div class="title">Theater</div>
 							<div class="txt">
-								1. 더킹<br>
-								2. 더킹<br>
-								3. 더킹<br>
-								4. 더킹<br>
-								5. 더킹<br>
-								6. 더킹<br>
-								7. 더킹<br>
-								8. 더킹<br>
-								9. 더킹<br>
-								10. 더킹
+								<c:forEach var="i" begin="1" end="10">
+									<span>${i }. 더킹</span>
+								</c:forEach>
 							</div>
 						</div>
 					</div>

@@ -10,11 +10,14 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.client.*;
 
+import movie.service.*;
+
 @Component
 public class MainService {
-	
 	@Autowired
 	SqlSessionFactory fac;
+	@Autowired
+	MovieService ms;
 	
 	// ·Î±×ÀÎ
 	public boolean login(String id, String pw, HttpSession session){
@@ -46,6 +49,9 @@ public class MainService {
 		String url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList?key=161f78de5eda148d75771f8d3a8d1cdb&targetDt="+day;
 		LinkedHashMap map = rt.getForObject(url, LinkedHashMap.class);
 		List<LinkedHashMap> movie = (List<LinkedHashMap>) ((LinkedHashMap)map.get("boxOfficeResult")).get("dailyBoxOfficeList");
+		for(LinkedHashMap m : movie){
+			ms.saveMovie(m);
+		}
 		return movie;
 	}
 }
