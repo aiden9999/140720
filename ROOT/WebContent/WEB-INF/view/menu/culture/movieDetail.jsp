@@ -74,7 +74,7 @@
 					</div>
 					<div class="movie_view">
 						<div class="view_content_wrap">
-							<div class="view_poster" style="background-image: url('/img/movie/${num}.gif')"></div>
+<%-- 							<div class="view_poster" style="background-image: url('/img/movie/${num}.gif')"></div> --%>
 						</div>
 					</div>
 				</section>

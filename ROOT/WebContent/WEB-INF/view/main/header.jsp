@@ -17,7 +17,7 @@
 			<li class="gnb">
 				<span>Play</span>
 			</li>
-			<li class="gnb">
+			<li class="gnb" onclick="location.href='/picture'">
 				<span>Picture</span>
 			</li>
 			<li class="gnb" onclick="location.href='/diary'">
